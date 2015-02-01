@@ -95,9 +95,10 @@ def rest_of_ORF(dna):
     stop codon is not divisible by 3, then it messes up.
     Right now, it returns dna
 
-    EDIT: This new versione considers this possibility
+    EDIT: This new version considers this possibility
     
     """ 
+    """
     TAG_index = dna.find('TAG')
     TAA_index = dna.find('TAA')
     TGA_index = dna.find('TGA')
@@ -141,27 +142,17 @@ def rest_of_ORF(dna):
 
     else:
         return dna
+    """
+    b = len(dna)
+    for x in range(0,b,3):
+        #print x
+        #print len(dna)  
+        if dna[x:x+3] == 'TAG' or dna[x:x+3] == 'TAA' or dna[x:x+3] == 'TGA':
+            rest_ORF = dna[0:x]
+        else:
+            rest_ORF = dna
 
-
-"""
-    if 'TAG' not in dna and 'TAA' not in dna and 'TGA' not in dna:
-        return dna
-    
-    elif TAG_index != -1 and TAG_index%3 == 0:
-        dna=dna[0:TAG_index]
-        return dna
-
-    elif TAA_index != -1 and TAA_index%3 == 0:
-        dna=dna[0:TAA_index]
-        return dna
-
-    elif TGA_index != -1 and TGA_index%3 == 0:
-        dna=dna[0:TGA_index]
-        return dna
-
-    else:
-        return dna
-"""
+    return rest_ORF        
 
    
 
@@ -177,17 +168,7 @@ def find_all_ORFs_oneframe(dna):
     >>> find_all_ORFs_oneframe("ATGCATGAATGTAGATAGATGTGCCC")
     ['ATGCATGAATGTAGA', 'ATGTGCCC']
     """
-    # function runs until no dna is left (hence while>0)
-    #below is an attmept to modify it to exclude ORFs with no stop codon,
-    # but this version wants them 
-    """
-    TAG_indices = [i for i in range(len(dna)) if dna.startswith('TAG',i)]
-    TAA_indices = [i for i in range(len(dna)) if dna.startswith('TAA',i)]
-    TGA_indices = [i for i in range(len(dna)) if dna.startswith('TGA',i)]
-    stop_indices = [TAG_indices, TAA_indices, TGA_indices]
-    stop_indices = sum(stop_indices,[])
-    stop_indices.sort()
-    """
+    
     frames=[]
 
     #dna = dna[:stop_indices[-1]+3]
