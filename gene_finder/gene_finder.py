@@ -211,7 +211,7 @@ def find_all_ORFs(dna):
     >>> find_all_ORFs("ATGCATGAATGTAG")
     ['ATGCATGAATGTAG', 'ATGAATGTAG', 'ATG']
     """
-    #note: I'm not happy with the way I put the different lists together.
+    #note to self: I'm not happy with the way I put the different lists together.
     #I'd like to find a more effecient way
 
     start_indices = [i for i in range(len(dna)) if dna.startswith('ATG',i)]
