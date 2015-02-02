@@ -98,63 +98,14 @@ def rest_of_ORF(dna):
     EDIT: This new version considers this possibility
     
     """ 
-    """
-    TAG_index = dna.find('TAG')
-    TAA_index = dna.find('TAA')
-    TGA_index = dna.find('TGA')
 
-    TAG_indices = [i for i in range(len(dna)) if dna.startswith('TAG',i)]
-    TAA_indices = [i for i in range(len(dna)) if dna.startswith('TAA',i)]
-    TGA_indices = [i for i in range(len(dna)) if dna.startswith('TGA',i)]
-
-    TAG_isa3 = [1]*len(TAG_indices)
-    TAA_isa3 = [1]*len(TAA_indices)
-    TGA_isa3 = [1]*len(TGA_indices)
-
-    for x in range(0,len(TAG_indices)):
-        TAG_isa3[x] = TAG_indices[x]%3
-
-    for x in range(0,len(TAA_indices)):
-        TAA_isa3[x] = TAA_indices[x]%3
-
-    for x in range(0,len(TGA_indices)):
-        TGA_isa3[x] = TGA_indices[x]%3
-           
-
-    if 'TAG' not in dna and 'TAA' not in dna and 'TGA' not in dna:
-        return dna
-
-    
-    elif 0 in TAG_isa3:
-        TAG_first = TAG_indices[TAG_isa3.index(0)]
-        frame=dna[0:TAG_first]
-        return frame
-
-    elif 0 in TAA_isa3:
-        TAA_first = TAA_indices[TAA_isa3.index(0)]
-        frame=dna[0:TAA_first]
-        return frame
-
-    if 0 in TGA_isa3:
-        TGA_first = TGA_indices[TGA_isa3.index(0)]
-        frame=dna[0:TGA_first]
-        return frame
-
-    else:
-        return dna
-    """
-    b = len(dna)
-    for x in range(0,b,3):
-        #print x
-        #print len(dna)  
+    for x in range(0,len(dna),3): 
         if dna[x:x+3] == 'TAG' or dna[x:x+3] == 'TAA' or dna[x:x+3] == 'TGA':
-            rest_ORF = dna[0:x]
-        else:
-            rest_ORF = dna
+            rest_ORF = dna[:x]
+            return rest_ORF
+        
+    return dna
 
-    return rest_ORF        
-
-   
 
 def find_all_ORFs_oneframe(dna):
     """ Finds all non-nested open reading frames in the given DNA sequence and returns
@@ -170,13 +121,13 @@ def find_all_ORFs_oneframe(dna):
     """
     
     frames=[]
-
-    #dna = dna[:stop_indices[-1]+3]
-    while len(dna)>0:
-        frames.append(rest_of_ORF(dna))
-        dna = dna[len(frames[0])+3:]
-        
-
+    i = 0
+    while i < len(dna):
+        if dna[i:i+3] == 'ATG':
+            frames.append(rest_of_ORF(dna[i:]))
+            i += len(rest_of_ORF(dna[i:])) + 3
+        else:
+            i += 3  
     return frames
 
 
@@ -195,6 +146,14 @@ def find_all_ORFs(dna):
     #note to self: I'm not happy with the way I put the different lists together.
     #I'd like to find a more effecient way
 
+    frames1 = find_all_ORFs_oneframe(dna)
+    frames2 = find_all_ORFs_oneframe(dna[1:])
+    frames3 = find_all_ORFs_oneframe(dna[2:])
+
+    all_frames = frames1 + frames2 + frames3
+    return all_frames
+
+"""
     start_indices = [i for i in range(len(dna)) if dna.startswith('ATG',i)]
     all_frames=[]
     #print start_indices
@@ -208,7 +167,7 @@ def find_all_ORFs(dna):
     #all_frames=sum(all_frames,[]) #may need to change this later
     all_frames=flatten(all_frames)
     return all_frames
-
+"""
 def find_all_ORFs_both_strands(dna):
     """ Finds all non-nested open reading frames in the given DNA sequence on both
         strands.
