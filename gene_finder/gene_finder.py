@@ -17,8 +17,7 @@ def shuffle_string(s):
     return ''.join(random.sample(s,len(s)))
 
 def flatten(l):
-    """ flattens a list. I might use this function later on in 
-    the program for the get_all_ORFs function
+    """ flattens a list of lists
     """
     out = []
     for item in l:
@@ -143,14 +142,13 @@ def find_all_ORFs(dna):
     >>> find_all_ORFs("ATGCATGAATGTAG")
     ['ATGCATGAATGTAG', 'ATGAATGTAG', 'ATG']
     """
-    #note to self: I'm not happy with the way I put the different lists together.
-    #I'd like to find a more effecient way
+# runs from 3 different starting positions
 
     frames1 = find_all_ORFs_oneframe(dna)
     frames2 = find_all_ORFs_oneframe(dna[1:])
     frames3 = find_all_ORFs_oneframe(dna[2:])
 
-    all_frames = frames1 + frames2 + frames3
+    all_frames = frames1 + frames2 + frames3 # puts all frames in list
     return all_frames
 
 """
@@ -170,45 +168,21 @@ def find_all_ORFs(dna):
 """
 def find_all_ORFs_both_strands(dna):
     """ Finds all non-nested open reading frames in the given DNA sequence on both
-        strands.
+        strands. Basically runs find_all_ORFs for both strands.
         
         dna: a DNA sequence
         returns: a list of non-nested ORFs
     >>> find_all_ORFs_both_strands("ATGCGAATGTAGCATCAAA")
     ['ATGCGAATG', 'ATGCTACATTCGCAT']
     """
-    #for DNA 
-    """
-    TAG_indices = [i for i in range(len(dna)) if dna.startswith('TAG',i)]
-    TAA_indices = [i for i in range(len(dna)) if dna.startswith('TAA',i)]
-    TGA_indices = [i for i in range(len(dna)) if dna.startswith('TGA',i)]
-    stop_indices = [TAG_indices, TAA_indices, TGA_indices]
-    stop_indices = sum(stop_indices,[])
-    stop_indices.sort()
 
-    dna_comp = get_reverse_complement(dna)
-    TAG_indices_comp = [i for i in range(len(dna)) if dna_comp.startswith('TAG',i)]
-    TAA_indices_comp = [i for i in range(len(dna)) if dna_comp.startswith('TAA',i)]
-    TGA_indices_comp = [i for i in range(len(dna)) if dna_comp.startswith('TGA',i)]
-    stop_indices_comp = [TAG_indices_comp, TAA_indices_comp, TGA_indices_comp]
-    stop_indices_comp = sum(stop_indices_comp,[])
-    stop_indices_comp.sort()
-
-
-    mod_dna = dna[:stop_indices[-1]]
-    mod_comp = dna_comp[:stop_indices_comp[-1]]
-    """
     dna_comp = get_reverse_complement(dna)
     strand1 = dna
     strand2 = dna_comp
-    #print 'for dna'
+
     frames_strand1 = find_all_ORFs(strand1)
-    #print frames_strand1
-    #print 'for complement'
     frames_strand2 = find_all_ORFs(strand2)
-    #print frames_strand2
-    #print '\n\n'
-    #print find_all_ORFs('ATGTAGCATCAAA')
+
 
     both_strand_frames = [frames_strand1, frames_strand2]
     both_strand_frames = sum(both_strand_frames,[])
@@ -222,7 +196,7 @@ def longest_ORF(dna):
     >>> longest_ORF("ATGCGAATGTAGCATCAAA")
     'ATGCTACATTCGCAT'
     """
-    # TODO: implement this
+
     all_frames = find_all_ORFs_both_strands(dna)
     longest = max(all_frames, key = len)
     return longest
@@ -270,7 +244,7 @@ def gene_finder(dna, threshold):
     pass
 
 if __name__ == "__main__":
-    get_complement('A')
-    get_complement('T')
+    #get_complement('A')
+    #get_complement('T')
     import doctest
     doctest.testmod()
