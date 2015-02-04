@@ -30,6 +30,8 @@ def flatten(l):
 ### YOU WILL START YOUR IMPLEMENTATION FROM HERE DOWN ###
 
 def reverse_string(s):
+    """ revervses a string
+    """
     if len(s) <= 1:
         return s
 
@@ -199,6 +201,7 @@ def longest_ORF(dna):
 
     all_frames = find_all_ORFs_both_strands(dna)
     longest = max(all_frames, key = len)
+    
     return longest
 
 
@@ -210,8 +213,46 @@ def longest_ORF_noncoding(dna, num_trials):
         dna: a DNA sequence
         num_trials: the number of random shuffles
         returns: the maximum length longest ORF """
-    # TODO: implement this
-    pass
+    
+    shuffled_dna = ['s']*num_trials
+
+    for x in range(0,num_trials):
+        shuffled_dna[x] = shuffle_string(dna)
+        #shuffled_dna.append(shuffle_string(dna))
+    
+    longest_ones = ['0']* num_trials
+    
+    #what I tried to is segment out the pieces of the code
+    #type(longest) from the function above returns string
+    #running longest_ORF(bob[0]) works, however running
+    # longest_ORF(h) does not work
+    #changing the list to appending from an intial list '[]' makes
+    #noh difference to assigning a list at the beginning of length num_trials
+    #I originally had the two for loops as one but I split it out
+    #that didn't work either.
+    #I print the result of this function in the next function
+    #which is the coding_strand_to_AA
+
+    print shuffled_dna
+    print
+    print type(shuffled_dna[0]) #returns string
+    print
+    bob = ['ATGCGAATGTAGCATCAAA','CCGCGTTCA'] #a different list of strings
+    h = str(shuffled_dna[0]) #converting to string makes no difference
+    print h                 #this print works
+    b = (longest_ORF(h))    #FAILS HERE
+    print
+    print b
+    return         #temporary return statement to faciliate above debugging
+    for y in range(0,num_trials):
+        longest_ones[y] = longest_ORF(shuffled_dna[y]) 
+        #longest_ones.append(longest_ORF(shuffled_dna[y]))
+
+    max_ORF = max(longest_ones, key=len)
+
+    #return max_ORF         #normal return statement
+
+
 
 def coding_strand_to_AA(dna):
     """ Computes the Protein encoded by a sequence of DNA.  This function
@@ -228,6 +269,8 @@ def coding_strand_to_AA(dna):
         'MPA'
     """
     # TODO: implement this
+    not_dna = 'ATGCCCGCTTT'
+    print longest_ORF_noncoding(not_dna,5)
     pass
 
 def gene_finder(dna):
@@ -240,7 +283,5 @@ def gene_finder(dna):
     pass
 
 if __name__ == "__main__":
-    #get_complement('A')
-    #get_complement('T')
     import doctest
     doctest.testmod()
