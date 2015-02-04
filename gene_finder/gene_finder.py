@@ -200,7 +200,13 @@ def longest_ORF(dna):
     """
 
     all_frames = find_all_ORFs_both_strands(dna)
-    longest = max(all_frames, key = len)
+
+    #deals with the case or empty list
+
+    if len(all_frames) > 0:
+        longest = max(all_frames, key = len)
+    else:
+        longest = ''
     
     return longest
 
@@ -215,42 +221,22 @@ def longest_ORF_noncoding(dna, num_trials):
         returns: the maximum length longest ORF """
     
     shuffled_dna = ['s']*num_trials
+    longest_ones = ['0']* num_trials
 
     for x in range(0,num_trials):
         shuffled_dna[x] = shuffle_string(dna)
-        #shuffled_dna.append(shuffle_string(dna))
-    
-    longest_ones = ['0']* num_trials
-    
-    #what I tried to is segment out the pieces of the code
-    #type(longest) from the function above returns string
-    #running longest_ORF(bob[0]) works, however running
-    # longest_ORF(h) does not work
-    #changing the list to appending from an intial list '[]' makes
-    #noh difference to assigning a list at the beginning of length num_trials
-    #I originally had the two for loops as one but I split it out
-    #that didn't work either.
-    #I print the result of this function in the next function
-    #which is the coding_strand_to_AA
+        longest_ones[x] = longest_ORF(shuffled_dna[x])         
 
-    print shuffled_dna
-    print
-    print type(shuffled_dna[0]) #returns string
-    print
-    bob = ['ATGCGAATGTAGCATCAAA','CCGCGTTCA'] #a different list of strings
-    h = str(shuffled_dna[0]) #converting to string makes no difference
-    print h                 #this print works
-    b = (longest_ORF(h))    #FAILS HERE
-    print
-    print b
-    return         #temporary return statement to faciliate above debugging
-    for y in range(0,num_trials):
-        longest_ones[y] = longest_ORF(shuffled_dna[y]) 
-        #longest_ones.append(longest_ORF(shuffled_dna[y]))
+    #deals with the case or empty list
 
-    max_ORF = max(longest_ones, key=len)
+    if len(longest_ones) > 0:
+        max_ORF = max(longest_ones, key=len)
+    else:
+        max_ORF = ''
 
-    #return max_ORF         #normal return statement
+    max_length = len(max_ORF)
+
+    return max_length       # returns integer
 
 
 
@@ -268,10 +254,19 @@ def coding_strand_to_AA(dna):
         >>> coding_strand_to_AA("ATGCCCGCTTT")
         'MPA'
     """
-    # TODO: implement this
-    not_dna = 'ATGCCCGCTTT'
-    print longest_ORF_noncoding(not_dna,5)
-    pass
+
+    amino_acid = aa_table['ATG']
+    AA_chain = []
+
+    if len(dna) % 3 != 0:
+        coding_strand = dna[:len(dna)-(len(dna)%3)]
+    else:
+        coding_strand = dna
+
+    for x in range(0,len(coding_strand),3):
+        AA_chain.append(aa_table[dna[x:x+3]])
+
+    return ''.join(AA_chain)
 
 def gene_finder(dna):
     """ Returns the amino acid sequences that are likely coded by the specified dna
