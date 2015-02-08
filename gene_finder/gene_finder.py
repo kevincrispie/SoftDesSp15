@@ -223,16 +223,16 @@ def find_all_ORFs_both_strands(dna):
     >>> find_all_ORFs_both_strands("ATGCGAATGTAGCATCAAA")
     ['ATGCGAATG', 'ATGCTACATTCGCAT']
     """
-    # defines each strand of dna
-    dna_comp = get_reverse_complement(dna) #defines dna complement
-
-    frames_strand1 = find_all_ORFs(dna) #finds all ORFs on dna strand
-    frames_strand2 = find_all_ORFs(dna_comp) #finds all ORFs of complement strand
-
-
-    both_strand_frames = frames_strand1 + frames_strand2 #puts all frames into list
     
-    return both_strand_frames  #returns the ORFs from both strands in a list
+    dna_comp = get_reverse_complement(dna) 
+
+    frames_strand1 = find_all_ORFs(dna) 
+    frames_strand2 = find_all_ORFs(dna_comp) 
+
+
+    both_strand_frames = frames_strand1 + frames_strand2 
+    
+    return both_strand_frames  
     
 
 
@@ -248,7 +248,7 @@ def longest_ORF(dna):
     'ATGCTACATTCGCAT'
     """
 
-    all_frames = find_all_ORFs_both_strands(dna) #finds all ORFs in dna 
+    all_frames = find_all_ORFs_both_strands(dna)  
 
     #deals with the case or empty list, returning a blank if there are no ORFs
 
@@ -257,7 +257,7 @@ def longest_ORF(dna):
     else:
         longest = ''    #returns blank if there are no ORFs in dna
     
-    return longest #returns string, the longest ORF in the given dna
+    return longest 
 
 
 
@@ -273,8 +273,8 @@ def longest_ORF_noncoding(dna, num_trials):
         differently each time it runs.
         """
     
-    shuffled_dna = ['s']*num_trials   #initializes shuffled_dna list
-    longest_ones = ['0']* num_trials  #initializes a list for longest ORFs
+    shuffled_dna = ['s']*num_trials   
+    longest_ones = ['0']* num_trials  
 
     for x in range(0,num_trials):
         longest_ones[x] = longest_ORF(shuffle_string(dna))         
@@ -361,18 +361,15 @@ def gene_finder(dna):
         shuffle_string function
     """
     
-    thresh = longest_ORF_noncoding(dna,1500) #computes trheshold based on 1500 tests
+    thresh = longest_ORF_noncoding(dna,1500) 
     
-    all_ORFs = find_all_ORFs(dna)  #opens all reading frames
+    all_ORFs = find_all_ORFs(dna)
+
     
-    #returns all ORFs above the threshold in a list
-    above_thresh = [] #intitializes above_thresh as an empty list
+    above_thresh = [] 
     for x in range(len(all_ORFs)):
         if len(all_ORFs[x])> thresh:
-            above_thresh.append(all_ORFs[x])  #poulates list using append function
-
-
-    #determines amino acids encoded by dna using ORFs above the threshold
+            above_thresh.append(all_ORFs[x])  
 
     amino_acids = []
     
@@ -380,7 +377,7 @@ def gene_finder(dna):
         amino_acids.append(coding_strand_to_AA(above_thresh[x]))
 
 
-    return amino_acids   #returns list of amino acids
+    return amino_acids   
 
 
 amino_acids = gene_finder(dna)
