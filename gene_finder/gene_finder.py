@@ -13,79 +13,129 @@ dna = load_seq("./data/X73525.fa")
 
 def shuffle_string(s):
     """ Shuffles the characters in the input string
-    """
-    return ''.join(random.sample(s,len(s)))
 
-def flatten(l):
-    """ flattens a list of lists
+    There are no doctests for this function since it randomly shuffles
+    the input string
+
     """
-    out = []
-    for item in l:
-        if isinstance(item, (list, tuple)):
-            out.extend(flatten(item))
-        else:
-            out.append(item)
-    return out
+    
+    return ''.join(random.sample(s,len(s)))
 
 def reverse_string(string):
     """ helper function that revervses a string
+
+    Doctest:
+
+    Doctests reverse string regardless of string length or makeup
+
+    >>> reverse_string('AMERICA!')
+    '!ACIREMA'
+    >>> reverse_string('JOHNNY B. GOODE')
+    'EDOOG .B YNNHOJ'
+    
     """
-    return string[::-1] #reverse string using Python's negative indexing
+    
+    return string[::-1] 
     
 def get_complement(nucleotide):
     """ Returns the complementary nucleotide
 
         nucleotide: a nucleotide (A, C, G, or T) represented as a string
         returns: the complementary nucleotide
+    
+    Doctests:
+
+    Doctests and added doctests cover each of the four nucleotide bases
+
     >>> get_complement('A')
     'T'
     >>> get_complement('C')
     'G'
+    
+    Added Doctests:
+
+    >>> get_complement('T')
+    'A'
+    >>> get_complement('G')
+    'C'
+
     """
-    if nucleotide == 'A':  #changes Adenine to Thymine
+    if nucleotide == 'A':  
         complement = 'T'
-    elif nucleotide == 'C': #changes Cytosine to Guanine
+    elif nucleotide == 'C': 
         complement = 'G'
-    elif nucleotide == 'T':  #changes Tymine to Adenine
+    elif nucleotide == 'T':  
         complement = 'A'
-    elif nucleotide == 'G':  #changes Guanine to Cytosine
+    elif nucleotide == 'G':  
         complement = 'C'
 
-    return complement #returns complementary nucleotide as a 1 element string
+    return complement 
 
 def get_reverse_complement(dna):
     """ Computes the reverse complementary sequence of DNA for the specfied DNA
-        sequence
+        sequence.
     
         dna: a DNA sequence represented as a string
         returns: the reverse complementary DNA sequence represented as a string
+    
+    Doctests:
+
+    The first two doctests adequately test whether the function both correctly
+    determines the complement of the DNA sequence and reverses it. The added 
+    doctests makes sure the function works at its most basic level,
+    returning a sinlge nucleotide complement if the DNA strand input is only
+    one nucleotide long.
+
     >>> get_reverse_complement("ATGCCCGCTTT")
     'AAAGCGGGCAT'
     >>> get_reverse_complement("CCGCGTTCA")
     'TGAACGCGG'
+
+    Added Doctest:
+
+    >>> get_reverse_complement("C")
+    'G'
+
     """
     
     complement = ''
     for x in range (len(dna)):
-        complement += get_complement(dna[x]) #adds new complement with each iteration
+        complement += get_complement(dna[x]) 
 
-    #return complements
-    reverse=reverse_string(complement) #reverses the string to get the reverse complement
+    reverse=reverse_string(complement) 
     
-    return reverse  #returns the reverse complement as a string
+    return reverse  
 
 
 def rest_of_ORF(dna):
     """ Takes a DNA sequence that is assumed to begin with a start codon and returns
-        the sequence up to but not including the first in frame stop codon.  If there
-        is no in frame stop codon, returns the whole string.
+        the sequence up to but not including the first in frame stop codon.  
+        If there is no in frame stop codon, it returns the whole string.
         
-        dna: a DNA sequence
+        dna: a DNA sequence as a string
         returns: the open reading frame represented as a string
+    
+    Doctests:
+
+    -The first doctest tests whether the correct ORF will be returned,
+    ignoring everything after the stop codon as well as the stop codon itself
+    -The second doctest does this as well, but also makes sure iteration will
+    be terminated only if the stop codon string is in the correct place, coming
+    after an integer number of other codons
+    -The third doctest also tests whether the function will ignore the stop 
+    codon and all nucleotides after it, but also makes sure that the function
+    returns an empty string if it starts with a stop codon
+
     >>> rest_of_ORF("ATGTGAA")
     'ATG'
     >>> rest_of_ORF("ATGAGATAGG")
     'ATGAGA'
+    
+    Added Doctest:
+
+    >>> rest_of_ORF("TAGG")
+    ''
+
     """
  
 
@@ -104,14 +154,17 @@ def find_all_ORFs_oneframe(dna):
         By non-nested we mean that if an ORF occurs entirely within
         another ORF, it should not be included in the returned list of ORFs.
         
-        dna: a DNA sequence
+        dna: a DNA sequence as a string
         returns: a list of non-nested ORFs
+    
+    Doctests:
+
     >>> find_all_ORFs_oneframe("ATGCATGAATGTAGATAGATGTGCCC")
     ['ATGCATGAATGTAGA', 'ATGTGCCC']
     """
     
-    frames=[]  #initializes list of ORFs
-    i = 0  #sets counter to 0
+    frames=[]  
+    i = 0  
     while i < len(dna):
         if dna[i:i+3] == 'ATG': 
             frames.append(rest_of_ORF(dna[i:]))
@@ -127,20 +180,21 @@ def find_all_ORFs(dna):
         ORF occurs entirely within another ORF and they are both in the same frame,
         it is not be included in the returned list of ORFs.
         
-        dna: a DNA sequence
+        dna: a DNA sequence as a string
         returns: a list of non-nested ORFs
+
+    Doctests:
 
     >>> find_all_ORFs("ATGCATGAATGTAG")
     ['ATGCATGAATGTAG', 'ATGAATGTAG', 'ATG']
     """
-# finds all ORFs from 3 different starting positions, dna[0], dna[1], and dna[2]
 
     frames1 = find_all_ORFs_oneframe(dna)
     frames2 = find_all_ORFs_oneframe(dna[1:])
     frames3 = find_all_ORFs_oneframe(dna[2:])
 
-    all_frames = frames1 + frames2 + frames3 # puts all ORFs in one list
-    return all_frames  #returns as a list all ORFs
+    all_frames = frames1 + frames2 + frames3 
+    return all_frames  
 
 """
     start_indices = [i for i in range(len(dna)) if dna.startswith('ATG',i)]
@@ -161,8 +215,11 @@ def find_all_ORFs_both_strands(dna):
     """ Finds all non-nested open reading frames in the given DNA sequence on both
         strands. It runs find_all_ORFs for both strands. 
         
-        dna: a DNA sequence
+        dna: a DNA sequence as a string
         returns: a list of non-nested ORFs
+    
+    Doctests:
+
     >>> find_all_ORFs_both_strands("ATGCGAATGTAGCATCAAA")
     ['ATGCGAATG', 'ATGCTACATTCGCAT']
     """
@@ -180,8 +237,13 @@ def find_all_ORFs_both_strands(dna):
 
 
 def longest_ORF(dna):
-    """ Finds the longest ORF on both strands of the specified DNA and returns it
-        as a string
+    """ Finds the longest ORF on both strands of the specified DNA
+
+        dna: a DNA sequence as a string
+        returns: the longest ORF as a string
+
+    Doctests:
+
     >>> longest_ORF("ATGCGAATGTAGCATCAAA")
     'ATGCTACATTCGCAT'
     """
@@ -205,14 +267,17 @@ def longest_ORF_noncoding(dna, num_trials):
         
         dna: a DNA sequence
         num_trials: the number of random shuffles
-        returns: the maximum length longest ORF """
+        returns: the maximum length of the longest ORF as integer
+
+        There are no doctests for this function because shuffle_string acts
+        differently each time it runs.
+        """
     
     shuffled_dna = ['s']*num_trials   #initializes shuffled_dna list
     longest_ones = ['0']* num_trials  #initializes a list for longest ORFs
 
     for x in range(0,num_trials):
-        shuffled_dna[x] = shuffle_string(dna)  #shuffles dna, creating new sequence for num_trials number of trials
-        longest_ones[x] = longest_ORF(shuffled_dna[x])   #determines longest ORF in each dna sequence      
+        longest_ones[x] = longest_ORF(shuffle_string(dna))         
 
     #deals with the case or empty list
 
@@ -221,9 +286,9 @@ def longest_ORF_noncoding(dna, num_trials):
     else:
         max_ORF = ''      #max_ORF is a blank if the list is empty
 
-    max_length = len(max_ORF)  #calculates length of longest ORF through all tests
+    max_length = len(max_ORF)  
 
-    return max_length     # returns integer, the length of longest ORF
+    return max_length 
 
 
 
@@ -236,33 +301,64 @@ def coding_strand_to_AA(dna):
         returns: a string containing the sequence of amino acids encoded by the
                  the input DNA fragment
 
+        Doctests:
+
+        -The first doctest checks to see whether the amino acid assignment
+        works as intended.
+        -The second doctest makes sure that the function returns the correct
+        amino acid sequence with two extra nucleotides in the sequence.
+        -The third doctest makes sure that the function returns the correct
+        amino acid sequence with one extra nucleotide in the sequence.
+        -The fourth doctest makes sure the function returns the correct
+        amino acid sequence even though there is no sart codon
+        -The fifth doctest makes sure the function returns an empty string
+        when there are no complete codons in the dna strand
+        -The sixth doctest makes sure that if there is a stop codon in the 
+        dna sequence, it will still run, and return a '|' in the place of 
+        an amino acid, as is defined in the aa_table dictionary
+
+
         >>> coding_strand_to_AA("ATGCGA")
         'MR'
         >>> coding_strand_to_AA("ATGCCCGCTTT")
         'MPA'
+
+        Added Doctests:
+
+        >>> coding_strand_to_AA("ATGCCCGCTT")
+        'MPA'
+        >>> coding_strand_to_AA("CGA")
+        'R'
+        >>> coding_strand_to_AA("CG")
+        ''
+        >>> coding_strand_to_AA("TAG")
+        '|'
+
     """
 
     
-    AA_chain = [] #initializes the list of the amino acid chain as an empty list
-
-    # if there are any extra nucleotides, the function removes them, otherwise it uses
-    # the entire dna sequence as a coding strand
     
-    if len(dna) % 3 != 0:     #cehcks if dna has only triplet codons
+    AA_chain = '' 
+    
+    if len(dna) % 3 != 0:     #checks if dna has only triplet codons
         coding_strand = dna[:len(dna)-(len(dna)%3)] #if it doesn't, it removes extra nucleotides
     else:
         coding_strand = dna # if there are no extra nucleotides, the coding strand is dna
 
     for x in range(0,len(coding_strand),3):
-        AA_chain.append(aa_table[dna[x:x+3]]) #uses imported aa_table dictionary to fin amino acid
-
-    return ''.join(AA_chain)  #turns list into a string, returns the string
+        AA_chain +=  aa_table[dna[x:x+3]]
+  
+    return AA_chain
 
 def gene_finder(dna):
     """ Returns the amino acid sequences that are likely coded by the specified dna
         
         dna: a DNA sequence
         returns: a list of all amino acid sequences coded by the sequence dna.
+
+        There are no doctests for this function because of its dependance on
+        the longest_ORF_noncoding function, which depends on the randomized 
+        shuffle_string function
     """
     
     thresh = longest_ORF_noncoding(dna,1500) #computes trheshold based on 1500 tests
@@ -290,6 +386,6 @@ def gene_finder(dna):
 amino_acids = gene_finder(dna)
 print amino_acids
 
-#if __name__ == "__main__":
-    #import doctest
-    #doctest.testmod()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
