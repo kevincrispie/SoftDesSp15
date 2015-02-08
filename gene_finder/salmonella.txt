@@ -1,7 +1,7 @@
 #this records my findings from the protein blast website
 
 The first amino acid sequence I found had a 100% Query cover for the type III
-secretion system protein SpaO in Salmonella enterica, covering the whole
+secretion system protein SpoA in Salmonella enterica, covering the whole
 length of the amino acid sequence. Other portions of the amino acid sequence
 came up with close matches to other different proteins, such as a Flagellar
 motor protein, a SpoA specific protein (surface presentation of antigens),
@@ -11,9 +11,38 @@ with amino acids coding for specific type of proteins. Some types of proteins
 could be combinations of other, smaller proteins, with only small changes in
 the amino acid sequence that allow them to perform more complex functions.
 Overall, the entire amino acid sequence may code for a specific type III
-secretion protein with SpaO, but in order to build such a protein, other
-proteins, or elements of other proteins, each involved with a specific
-function (surface presentation of antigens, secretion, etc) must be used. 
+secretion protein from the SpoA superfamily, but in order to build such a protein, other proteins, or elements of other proteins, each involved with a specific function (surface presentation of antigens, secretion, etc) must be 
+used. The main biological role of an SpoA protein is the cellular amino acid
+catabolic process.
+
+For the second amino acid sequence, the closest match (100% Query cover) is
+another type of type III secretion protein, this time an SpaS protein, for
+Salmonella enterica. SpaS is a  type of surface presentation of anitgens
+protein, like SpaA. SpaS is needed for Salmonella to enter into a mammal's
+cells. It's main biological role is therefore pathogenisis, or the spread of
+itself. 
+
+The third amino acid sequence also belongs to Salmonella enterica, and it's
+closest match is ATP synthase SpaL (100% Query cover).
+
+The fourth amino acid sequence is a Salmonella Invasion protein InvJ, from
+the SpaN superfamily of proteins that use this type of antigen presentation.
+It has 100% query cover for this protein.
+
+The fifth amino acid sequence is another type III secretion protein from
+Salmonella enterica, this time from the FliP superfamily of proteins. It has
+SpaP surface presentation of antigens. It is a 100% query cover match for 
+this protein.
+
+The sixth amino acid is a type II secretion system protein using SpaR 
+presentation of anitgens. It is a 100% query cover match for this protein.
+This amino acid sequence also has a 91% match for a type III secretion 
+protein in E. coli, suggesting that this secretion protein has a similar 
+origin. It is possible that an E. coli organism, or many E. coli organisms
+long ago supplied the DNA to code for this secretion protein via horizontal
+gene transfer. Once inside the Salmonella, the DNA was changed or shuffled
+around, becoming what it is today and coding for a very similar protein that
+is currently found in E. coli. 
 
 
 
@@ -24,7 +53,7 @@ function (surface presentation of antigens, secretion, etc) must be used.
 
 
 
-Full Results from gene_finder.py:
+Full amino acid results from gene_finder.py:
 
 
 
