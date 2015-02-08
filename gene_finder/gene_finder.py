@@ -30,7 +30,7 @@ def flatten(l):
 def reverse_string(string):
     """ helper function that revervses a string
     """
-    return string[-1:-len(string)-1:-1] #reverse string using Python's negative indexing
+    return string[::-1] #reverse string using Python's negative indexing
     
 def get_complement(nucleotide):
     """ Returns the complementary nucleotide
@@ -42,16 +42,16 @@ def get_complement(nucleotide):
     >>> get_complement('C')
     'G'
     """
-    if nucleotide=='A':
-        complement='T'
-    elif nucleotide=='C':
-        complement='G'
-    elif nucleotide=='T':
-        complement='A'
-    elif nucleotide=='G':
-        complement='C'
+    if nucleotide == 'A':  #changes Adenine to Thymine
+        complement = 'T'
+    elif nucleotide == 'C': #changes Cytosine to Guanine
+        complement = 'G'
+    elif nucleotide == 'T':  #changes Tymine to Adenine
+        complement = 'A'
+    elif nucleotide == 'G':  #changes Guanine to Cytosine
+        complement = 'C'
 
-    return complement
+    return complement #returns complementary nucleotide as a 1 element string
 
 def get_reverse_complement(dna):
     """ Computes the reverse complementary sequence of DNA for the specfied DNA
@@ -64,13 +64,13 @@ def get_reverse_complement(dna):
     >>> get_reverse_complement("CCGCGTTCA")
     'TGAACGCGG'
     """
-    complements = ['b'] * len(dna) #initializes the complement list
+    
+    complement = ''
     for x in range (len(dna)):
-        complements[x]=get_complement(dna[x]) #populates list with corresponding nucleotide complements
+        complement += get_complement(dna[x]) #adds new complement with each iteration
 
-    complements = ''.join(complements) #makes the list into a string
     #return complements
-    reverse=reverse_string(complements) #reverses the string to get the reverse complement
+    reverse=reverse_string(complement) #reverses the string to get the reverse complement
     
     return reverse  #returns the reverse complement as a string
 
@@ -90,7 +90,7 @@ def rest_of_ORF(dna):
  
 
     for x in range(0,len(dna),3): 
-        if dna[x:x+3] == 'TAG' or dna[x:x+3] == 'TAA' or dna[x:x+3] == 'TGA':
+        if dna[x:x+3] in ['TAG', 'TAA', 'TGA']:
             rest_ORF = dna[:x]
             return rest_ORF
         
@@ -110,14 +110,14 @@ def find_all_ORFs_oneframe(dna):
     ['ATGCATGAATGTAGA', 'ATGTGCCC']
     """
     
-    frames=[]
-    i = 0
+    frames=[]  #initializes list of ORFs
+    i = 0  #sets counter to 0
     while i < len(dna):
-        if dna[i:i+3] == 'ATG':
+        if dna[i:i+3] == 'ATG': 
             frames.append(rest_of_ORF(dna[i:]))
-            i += len(rest_of_ORF(dna[i:])) + 3
+            i += len(rest_of_ORF(dna[i:])) + 3 #increments counter by length of ORF and the stop codon
         else:
-            i += 3  
+            i += 3  #increments counter by 3 if no start codon found to search starting at next codon
     return frames
 
 
@@ -133,14 +133,14 @@ def find_all_ORFs(dna):
     >>> find_all_ORFs("ATGCATGAATGTAG")
     ['ATGCATGAATGTAG', 'ATGAATGTAG', 'ATG']
     """
-# runs from 3 different starting positions
+# finds all ORFs from 3 different starting positions, dna[0], dna[1], and dna[2]
 
     frames1 = find_all_ORFs_oneframe(dna)
     frames2 = find_all_ORFs_oneframe(dna[1:])
     frames3 = find_all_ORFs_oneframe(dna[2:])
 
-    all_frames = frames1 + frames2 + frames3 # puts all frames in list
-    return all_frames
+    all_frames = frames1 + frames2 + frames3 # puts all ORFs in one list
+    return all_frames  #returns as a list all ORFs
 
 """
     start_indices = [i for i in range(len(dna)) if dna.startswith('ATG',i)]
@@ -168,15 +168,12 @@ def find_all_ORFs_both_strands(dna):
     """
     # defines each strand of dna
     dna_comp = get_reverse_complement(dna) #defines dna complement
-    strand1 = dna     #assigns strand 1 to be the dna
-    strand2 = dna_comp #assigns strand 2 to be the dna complement
 
-    frames_strand1 = find_all_ORFs(strand1)
-    frames_strand2 = find_all_ORFs(strand2)
+    frames_strand1 = find_all_ORFs(dna) #finds all ORFs on dna strand
+    frames_strand2 = find_all_ORFs(dna_comp) #finds all ORFs of complement strand
 
 
-    both_strand_frames = [frames_strand1, frames_strand2] #puts all frames into list
-    both_strand_frames = sum(both_strand_frames,[]) #makes list of lists into one list
+    both_strand_frames = frames_strand1 + frames_strand2 #puts all frames into list
     
     return both_strand_frames  #returns the ORFs from both strands in a list
     
@@ -210,19 +207,19 @@ def longest_ORF_noncoding(dna, num_trials):
         num_trials: the number of random shuffles
         returns: the maximum length longest ORF """
     
-    shuffled_dna = ['s']*num_trials
-    longest_ones = ['0']* num_trials
+    shuffled_dna = ['s']*num_trials   #initializes shuffled_dna list
+    longest_ones = ['0']* num_trials  #initializes a list for longest ORFs
 
     for x in range(0,num_trials):
-        shuffled_dna[x] = shuffle_string(dna)
-        longest_ones[x] = longest_ORF(shuffled_dna[x])         
+        shuffled_dna[x] = shuffle_string(dna)  #shuffles dna, creating new sequence for num_trials number of trials
+        longest_ones[x] = longest_ORF(shuffled_dna[x])   #determines longest ORF in each dna sequence      
 
     #deals with the case or empty list
 
     if len(longest_ones) > 0:
-        max_ORF = max(longest_ones, key=len)
+        max_ORF = max(longest_ones, key=len) #as long as list is not empty, determines largest element of list
     else:
-        max_ORF = ''
+        max_ORF = ''      #max_ORF is a blank if the list is empty
 
     max_length = len(max_ORF)  #calculates length of longest ORF through all tests
 
@@ -272,14 +269,14 @@ def gene_finder(dna):
     
     all_ORFs = find_all_ORFs(dna)  #opens all reading frames
     
-    #returns all ORFs above the threshold
+    #returns all ORFs above the threshold in a list
     above_thresh = [] #intitializes above_thresh as an empty list
     for x in range(len(all_ORFs)):
         if len(all_ORFs[x])> thresh:
             above_thresh.append(all_ORFs[x])  #poulates list using append function
 
 
-    #determines amino acids encoded by dna
+    #determines amino acids encoded by dna using ORFs above the threshold
 
     amino_acids = []
     
