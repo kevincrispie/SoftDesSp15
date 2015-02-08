@@ -1,4 +1,7 @@
-#this records my findings from the protein blast website
+# this records my findings from the protein blast website
+# first part includes analysis of results, second part is results output
+
+Analysis
 
 The first amino acid sequence I found had a 100% Query cover for the type III
 secretion system protein SpoA in Salmonella enterica, covering the whole
@@ -20,10 +23,20 @@ another type of type III secretion protein, this time an SpaS protein, for
 Salmonella enterica. SpaS is a  type of surface presentation of anitgens
 protein, like SpaA. SpaS is needed for Salmonella to enter into a mammal's
 cells. It's main biological role is therefore pathogenisis, or the spread of
-itself. 
+itself. This amino acid sequence also has a 96% match with a secretion
+protein from Providencia alcalifaciens and a secretion protein from E. coli.
+This suggests that there was some horizontal gene transfer for the DNA
+that codes for this secretion protein between E. coli, Providencia
+alcalifaciens, and Salmonella, and a closely related common ancestor.
+Researching this further, I found that E. coli and Salmonella are from the
+same family of bacteria. There are also some 95%  matches with some other
+organisms for secretion proteins,such as Pseudomonas putida and Sodalis.
 
 The third amino acid sequence also belongs to Salmonella enterica, and it's
-closest match is ATP synthase SpaL (100% Query cover).
+closest match is ATP synthase SpaL (100% Query cover). There is also a 98%
+match with the ATP synthase for Providencia alcalifaciens, again suggesting
+horizontal gene transfer between the two, or a very closely related common
+ancestor.
 
 The fourth amino acid sequence is a Salmonella Invasion protein InvJ, from
 the SpaN superfamily of proteins that use this type of antigen presentation.
@@ -32,7 +45,8 @@ It has 100% query cover for this protein.
 The fifth amino acid sequence is another type III secretion protein from
 Salmonella enterica, this time from the FliP superfamily of proteins. It has
 SpaP surface presentation of antigens. It is a 100% query cover match for 
-this protein.
+this protein. There is 99% query cover with the type III secretion system
+protein for E. Coli.
 
 The sixth amino acid is a type II secretion system protein using SpaR 
 presentation of anitgens. It is a 100% query cover match for this protein.
@@ -46,15 +60,6 @@ is currently found in E. coli.
 
 
 
-
-
-
-
-
-
-
 Full amino acid results from gene_finder.py:
-
-
 
 ['MSLRVRQIDRREWLLAQTATECQRHGREATLEYPTRQGMWVRLSDAEKRWSAWIKPGDWLEHVSPALAGAAVSAGAEHLVVPWLAATERPFELPVPHLSCRRLCVENPVPGSALPEGKLLHIMSDRGGLWFEHLPELPAVGGGRPKMLRWPLRFVIGSSDTQRSLLGRIGIGDVLLIRTSRAEVYCYAKKLGHFNRVEGGIIVETLDIQHIEEENNTTETAETLPGLNQLPVKLEFVLYRKNVTLAELEAMGQQQLLSLPTNAELNVEIMANGVLLGNGELVQMNDTLGVEIHEWLSESGNGE', 'MSSNKTEKPTKKRLEDSAKKGQSFKSKDLIIACLTLGGIAYLVSYGSFNEFMGIIKIIIADNFDQSMADYSLAVFGIGLKYLIPFMLLCLVCSALPALLQAGFVLATEALKPNLSALNPVEGAKKLFSMRTVKDTVKTLLYLSSFVVAAIICWKKYKVEIFSQLNGNIVGIAVIWRELLLALVLTCLACALIVLLLDAIAEYFLTMKDMKMDKEEVKREMKEQEGNPEVKSKRREVHMEILSEQVKSDIENSRLIVANPTHITIGIYFKPELMPIPMISVYETNQRALAVRAYAEKVGVPVIVDIKLARSLFKTHRRYDLVSLEEIDEVLRLLVWLEEVENAGKDVIQPQENEVRH', 'MGIFASAGCGKTMLMHMLIEQTEADVFVIGLIGERGREVTEFVDMLRASHKKEKCVLVFATSDFPSVDRCNAAQLATTVAEYFRDQGKRVVLFIDSMTRYARALRDVALASGERPARRGYPASVFDNLPRLLERPGATSEGSITAFYTVLLESEEEADPMADEIRSILDGHLYLSRKLAGQGHYPAIDVLKSVSRVFGQVTTPTHAEQASAVRKLMTRLEELQLFIDLGEYRPGENIDNDRAMQMRDSLKAWLCQPVAQYSSFDDTLSGMNAFADQN', 'MGDVSAVSSSGNILLPQQDEVGGLSEALKKAVEKHKTEYSGDKKDRDYGDAFVMHKETALPLLLAAWRHGAPAKSEHHNGNVSGLHHNGKSELRIAEKLLKVTAEKSVGLISAEAKVDKSAALLSSKNRPLESVSGKKLSADLKAVESVSEVTDNATGISDDNIKALPGDNKAIAGEGVRKEGAPLARDVAPARMAAANTGKPEDKDHKKVKDVSQLPLQPTTIADLSQLTGGDEKMPLAAQSKPMMTIFPTADGVKGEDSSLTYRFQRWGNDYSVNIQARQAGEFSLIPSNTQVEHRLHDQWQNGNPQRWHLTRDDQQNPQQQQHRQQSGEEDDA', 'MGNDISLIALLAFSTLLPFIIASGTCFVKFSIVFVMVRNALGLQQIPSNMTLNGVALLLSMFVMWPIMHDAYVYFEDEDVTFNDISSLSKHVDEGLDGYRDYLIKYSDRELVQFFENAQLKRQYGEETETVKRDKDEIEKPSIFALLPAYALSEIKSAFKIGFYLYLPFVVVDLVVSSVLLALGMMMMSPVTISTPIKLVLFVALDGWTLLSKGLILQYMDIAT', 'MFYALYFEIHHLVASAALGFARVAPIFFFLPFLNSGVLSGAPRNAIIILVALGVWPHALNEAPPFLSVAMIPLVLQEAAVGVMLGCLLSWPFWVMHALGCIIDNQRGATLSSSIDPANGIDTSEMANFLNMFAAVVYLQNGGLVTMVDVLNKSYQLCDPMNECTPSLPPLLTFINQVAQNALVLASPVVLVLLLSEVFLGLLSRFAPQMNAFAISLTVKSGIAVLIMLLYFSPVLPDNVLRLSFQATGLSSWFYERGATHVLE']

@@ -45,7 +45,7 @@ def get_complement(nucleotide):
     
     Doctests:
 
-    Doctests and added doctests cover each of the four nucleotide bases
+    Orginial and added doctests cover each of the four nucleotide bases
 
     >>> get_complement('A')
     'T'
@@ -159,8 +159,25 @@ def find_all_ORFs_oneframe(dna):
     
     Doctests:
 
+    -The first doctest makes sure that only ORFs that start on indices that
+    are multiples of 3 are returned.
+    -The second doctest also makes sure that the ORF will only be returned
+    if the start codon starts on an indeex multiple of 3. It also ensures 
+    that if no valid ORFs are found, an empty list is returned and does not
+    produce an error.
+    -The third doctest shows that the function does not return nested ORFs.
+
     >>> find_all_ORFs_oneframe("ATGCATGAATGTAGATAGATGTGCCC")
     ['ATGCATGAATGTAGA', 'ATGTGCCC']
+
+    Added Doctests:
+
+    >>> find_all_ORFs_oneframe("CCATGAGGGTAG")
+    []
+
+    >>> find_all_ORFs_oneframe("ATGATGTAGTAG")
+    ['ATGATG']
+
     """
     
     frames=[]  
@@ -185,8 +202,23 @@ def find_all_ORFs(dna):
 
     Doctests:
 
+    -The first doctest tests whether the function can correctly parse out
+    different ORFs from a single strand.
+    -The second doctest ensures that the function returns an empty list
+    if there are no valid ORFs and does not produce an error.
+    -The third doctest shows that the function does not return nested ORFs.
+
     >>> find_all_ORFs("ATGCATGAATGTAG")
     ['ATGCATGAATGTAG', 'ATGAATGTAG', 'ATG']
+
+    Added Doctests:
+
+    >>> find_all_ORFs("AAAAAAAAA")
+    []
+
+    >>> find_all_ORFs("ATGATGTAGTAG")
+    ['ATGATG']
+
     """
 
     frames1 = find_all_ORFs_oneframe(dna)
@@ -196,21 +228,6 @@ def find_all_ORFs(dna):
     all_frames = frames1 + frames2 + frames3 
     return all_frames  
 
-"""
-    start_indices = [i for i in range(len(dna)) if dna.startswith('ATG',i)]
-    all_frames=[]
-    #print start_indices
-    for x in range(0,len(start_indices)):
-
-        mod_dna=dna[start_indices[x]:]
-        #print x
-        #print mod_dna
-        all_frames.append(find_all_ORFs_oneframe(mod_dna))
-    
-    #all_frames=sum(all_frames,[]) #may need to change this later
-    all_frames=flatten(all_frames)
-    return all_frames
-"""
 def find_all_ORFs_both_strands(dna):
     """ Finds all non-nested open reading frames in the given DNA sequence on both
         strands. It runs find_all_ORFs for both strands. 
@@ -220,8 +237,21 @@ def find_all_ORFs_both_strands(dna):
     
     Doctests:
 
+    -The first doctest ensures that the correct ORFs for the dna and 
+    complement are returned.
+    -The second doctest makes sure that the function handles an invalid DNA
+    sequence, returning an empty list if the strand does not code for anything
+    and does not produce an error.
+
+
     >>> find_all_ORFs_both_strands("ATGCGAATGTAGCATCAAA")
     ['ATGCGAATG', 'ATGCTACATTCGCAT']
+
+    Added Doctest:
+
+    find_all_ORFs_both_strands("AAAAAAAAA")
+    []
+
     """
     
     dna_comp = get_reverse_complement(dna) 
@@ -244,8 +274,20 @@ def longest_ORF(dna):
 
     Doctests:
 
+    -The first doctest ensures that the function interfaces correctly with
+    logest_ORF and returns the longest ORF result from that function
+    -The second doctest makes sure that the function returns an empty string
+    when the input DNA sequence does not code for anything and does not produce
+    an error.
+
     >>> longest_ORF("ATGCGAATGTAGCATCAAA")
     'ATGCTACATTCGCAT'
+    
+    Added Doctest:
+
+    >>> longest_ORF("AAAAAAAAA")
+    ''
+
     """
 
     all_frames = find_all_ORFs_both_strands(dna)  
