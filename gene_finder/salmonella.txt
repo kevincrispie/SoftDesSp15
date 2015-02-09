@@ -1,7 +1,17 @@
-# this records my findings from the protein blast website
-# first part includes analysis of results, second part is results output
+# This records my findings from the protein blast website
+# First part is a list of potential porteins, second part includes analysis of results, third part is results output
 
-Analysis
+Candidate Proteins:
+
+Type III secretion system protein SpoA  (100% Query cover)
+Type III secretion protein SpaS         (100% Query cover)
+ATP synthase SpaL 						(100% Query cover)
+Invasion protein InvJ 					(100% Query cover)
+Type III secretion protein SpaN			(100% Query cover)
+Type III secretion protein SpaP			(100% Query cover)
+Type III secretion protein SpaR			(100% Query cover)
+
+Analysis:
 
 The first amino acid sequence I found had a 100% Query cover for the type III
 secretion system protein SpoA in Salmonella enterica, covering the whole
@@ -32,7 +42,7 @@ Researching this further, I found that E. coli and Salmonella are from the
 same family of bacteria. There are also some 95%  matches with some other
 organisms for secretion proteins,such as Pseudomonas putida and Sodalis.
 
-The third amino acid sequence also belongs to Salmonella enterica, and it's
+The third amino acid sequence also belongs to Salmonella enterica, and its
 closest match is ATP synthase SpaL (100% Query cover). There is also a 98%
 match with the ATP synthase for Providencia alcalifaciens, again suggesting
 horizontal gene transfer between the two, or a very closely related common
@@ -48,7 +58,7 @@ SpaP surface presentation of antigens. It is a 100% query cover match for
 this protein. There is 99% query cover with the type III secretion system
 protein for E. Coli.
 
-The sixth amino acid is a type II secretion system protein using SpaR 
+The sixth amino acid is a type III secretion system protein using SpaR 
 presentation of anitgens. It is a 100% query cover match for this protein.
 This amino acid sequence also has a 91% match for a type III secretion 
 protein in E. coli, suggesting that this secretion protein has a similar 

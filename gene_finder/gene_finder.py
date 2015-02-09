@@ -81,11 +81,8 @@ def get_reverse_complement(dna):
     
     Doctests:
 
-    The first two doctests adequately test whether the function both correctly
-    determines the complement of the DNA sequence and reverses it. The added 
-    doctests makes sure the function works at its most basic level,
-    returning a sinlge nucleotide complement if the DNA strand input is only
-    one nucleotide long.
+    -The first two doctests adequately test whether the function both correctly
+    determines the complement of the DNA sequence and reverses it. 
 
     >>> get_reverse_complement("ATGCCCGCTTT")
     'AAAGCGGGCAT'
@@ -93,6 +90,10 @@ def get_reverse_complement(dna):
     'TGAACGCGG'
 
     Added Doctest:
+
+    -The added doctest makes sure the function works at its most basic level,
+    returning a sinlge nucleotide complement if the DNA strand input is only
+    one nucleotide long.
 
     >>> get_reverse_complement("C")
     'G'
@@ -119,21 +120,25 @@ def rest_of_ORF(dna):
 
     -The first doctest tests whether the correct ORF will be returned,
     ignoring everything after the stop codon as well as the stop codon itself
-    -The second doctest does this as well, but also makes sure iteration will
-    be terminated only if the stop codon string is in the correct place, coming
-    after an integer number of other codons
-    -The third doctest also tests whether the function will ignore the stop 
-    codon and all nucleotides after it, but also makes sure that the function
-    returns an empty string if it starts with a stop codon
 
     >>> rest_of_ORF("ATGTGAA")
     'ATG'
+
+    -The second doctest does this as well, but also makes sure iteration will
+    be terminated only if the stop codon string is in the correct place, coming
+    after an integer number of other codons
+
     >>> rest_of_ORF("ATGAGATAGG")
     'ATGAGA'
     
     Added Doctest:
 
-    >>> rest_of_ORF("TAGG")
+    -The third doctest tests whether the function will ignore the stop 
+    codon and all nucleotides after it, even if there is a valid ORF after
+    the stop codon. It also makes sure that the function returns an empty 
+    string if it starts with a stop codon
+
+    >>> rest_of_ORF("TAGATGGGGTAG")
     ''
 
     """
@@ -159,19 +164,21 @@ def find_all_ORFs_oneframe(dna):
 
     -The first doctest makes sure that only ORFs that start on indices that
     are multiples of 3 are returned.
-    -The second doctest also makes sure that the ORF will only be returned
-    if the start codon starts on an indeex multiple of 3. It also ensures 
-    that if no valid ORFs are found, an empty list is returned and does not
-    produce an error.
-    -The third doctest shows that the function does not return nested ORFs.
 
     >>> find_all_ORFs_oneframe("ATGCATGAATGTAGATAGATGTGCCC")
     ['ATGCATGAATGTAGA', 'ATGTGCCC']
 
     Added Doctests:
 
+    -The second doctest also makes sure that the ORF will only be returned
+    if the start codon starts on an indeex multiple of 3. It also ensures 
+    that if no valid ORFs are found, an empty list is returned and does not
+    produce an error.
+
     >>> find_all_ORFs_oneframe("CCATGAGGGTAG")
     []
+
+    -The third doctest shows that the function does not return nested ORFs.
 
     >>> find_all_ORFs_oneframe("ATGATGTAGTAG")
     ['ATGATG']
@@ -201,17 +208,19 @@ def find_all_ORFs(dna):
 
     -The first doctest tests whether the function can correctly parse out
     different ORFs from a single strand.
-    -The second doctest ensures that the function returns an empty list
-    if there are no valid ORFs and does not produce an error.
-    -The third doctest shows that the function does not return nested ORFs.
 
     >>> find_all_ORFs("ATGCATGAATGTAG")
     ['ATGCATGAATGTAG', 'ATGAATGTAG', 'ATG']
 
     Added Doctests:
 
+    -The second doctest ensures that the function returns an empty list
+    if there are no valid ORFs and does not produce an error.
+
     >>> find_all_ORFs("AAAAAAAAA")
     []
+
+    -The third doctest shows that the function does not return nested ORFs.
 
     >>> find_all_ORFs("ATGATGTAGTAG")
     ['ATGATG']
@@ -237,15 +246,15 @@ def find_all_ORFs_both_strands(dna):
 
     -The first doctest ensures that the correct ORFs for the dna and 
     complement are returned.
-    -The second doctest makes sure that the function handles an invalid DNA
-    sequence, returning an empty list if the strand does not code for anything
-    and does not produce an error.
-
-
+    
     >>> find_all_ORFs_both_strands("ATGCGAATGTAGCATCAAA")
     ['ATGCGAATG', 'ATGCTACATTCGCAT']
 
     Added Doctest:
+
+    -The second doctest makes sure that the function handles an invalid DNA
+    sequence, returning an empty list if the strand does not code for anything
+    and does not produce an error.
 
     find_all_ORFs_both_strands("AAAAAAAAA")
     []
@@ -271,14 +280,15 @@ def longest_ORF(dna):
 
     -The first doctest ensures that the function interfaces correctly with
     logest_ORF and returns the longest ORF result from that function
-    -The second doctest makes sure that the function returns an empty string
-    when the input DNA sequence does not code for anything and does not produce
-    an error.
 
     >>> longest_ORF("ATGCGAATGTAGCATCAAA")
     'ATGCTACATTCGCAT'
     
     Added Doctest:
+
+    -The second doctest makes sure that the function returns an empty string
+    when the input DNA sequence does not code for anything and does not produce
+    an error
 
     >>> longest_ORF("AAAAAAAAA")
     ''
@@ -337,32 +347,41 @@ def coding_strand_to_AA(dna):
         Doctests:
 
         -The first doctest checks to see whether the amino acid assignment
-        works as intended.
-        -The second doctest makes sure that the function returns the correct
-        amino acid sequence with two extra nucleotides in the sequence.
-        -The third doctest makes sure that the function returns the correct
-        amino acid sequence with one extra nucleotide in the sequence.
-        -The fourth doctest makes sure the function returns the correct
-        amino acid sequence even though there is no sart codon
-        -The fifth doctest makes sure the function returns an empty string
-        when there are no complete codons in the dna strand
-        -The sixth doctest makes sure that if there is a stop codon in the 
-        dna sequence, it will still run, and return a '|' in the place of 
-        an amino acid, as it is defined in the aa_table dictionary
+        works as intended.     
 
         >>> coding_strand_to_AA("ATGCGA")
         'MR'
+        
+        -The second doctest makes sure that the function returns the correct
+        amino acid sequence with two extra nucleotides in the sequence.
+
         >>> coding_strand_to_AA("ATGCCCGCTTT")
         'MPA'
 
         Added Doctests:
-
+        
+        -The third doctest makes sure that the function returns the correct
+        amino acid sequence with one extra nucleotide in the sequence.
+       
         >>> coding_strand_to_AA("ATGCCCGCTT")
         'MPA'
+        
+        -The fourth doctest makes sure the function returns the correct
+        amino acid sequence even though there is no sart codon
+        
         >>> coding_strand_to_AA("CGA")
         'R'
+        
+        -The fifth doctest makes sure the function returns an empty string
+        when there are no complete codons in the dna strand
+        
         >>> coding_strand_to_AA("CG")
         ''
+        
+        -The sixth doctest makes sure that if there is a stop codon in the 
+        dna sequence, it will still run, and return a '|' in the place of 
+        an amino acid, as it is defined in the aa_table dictionary
+       
         >>> coding_strand_to_AA("TAG")
         '|'
 
