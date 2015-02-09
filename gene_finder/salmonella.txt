@@ -56,8 +56,10 @@ origin. It is possible that an E. coli organism, or many E. coli organisms
 long ago supplied the DNA to code for this secretion protein via horizontal
 gene transfer. Once inside the Salmonella, the DNA was changed or shuffled
 around, becoming what it is today and coding for a very similar protein that
-is currently found in E. coli. 
-
+is currently found in E. coli. As I mentioned before, Salmonella and E. coli
+are also relatively similar organisms, from the same family of bactreria, so
+they may share some geneitc origins, in which horizontal gene transfer may
+have played a part.
 
 
 Full amino acid results from gene_finder.py:

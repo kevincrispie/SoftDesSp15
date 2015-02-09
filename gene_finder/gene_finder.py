@@ -10,7 +10,6 @@ from amino_acids import aa, codons, aa_table
 import random
 from load import load_seq
 
-
 def shuffle_string(s):
     """ Shuffles the characters in the input string
 
@@ -26,7 +25,8 @@ def reverse_string(string):
 
     Doctest:
 
-    Doctests reverse string regardless of string length or makeup
+    Doctests show that function reverses string regardless of string 
+    length or makeup
 
     >>> reverse_string('AMERICA!')
     '!ACIREMA'
@@ -60,7 +60,7 @@ def get_complement(nucleotide):
     'C'
 
     """
-    
+
     if nucleotide == 'A':  
         complement = 'T'
     elif nucleotide == 'C': 
@@ -106,7 +106,6 @@ def get_reverse_complement(dna):
     reverse=reverse_string(complement) 
     
     return reverse  
-
 
 def rest_of_ORF(dna):
     """ Takes a DNA sequence that is assumed to begin with a start codon and returns
@@ -189,7 +188,6 @@ def find_all_ORFs_oneframe(dna):
             i += 3  #increments counter by 3 if no start codon found to search starting at next codon
     return frames
 
-
 def find_all_ORFs(dna):
     """ Finds all non-nested open reading frames in the given DNA sequence in all 3
         possible frames and returns them as a list.  By non-nested I mean that if an
@@ -263,8 +261,6 @@ def find_all_ORFs_both_strands(dna):
     
     return both_strand_frames  
     
-
-
 def longest_ORF(dna):
     """ Finds the longest ORF on both strands of the specified DNA
 
@@ -300,8 +296,6 @@ def longest_ORF(dna):
     
     return longest 
 
-
-
 def longest_ORF_noncoding(dna, num_trials):
     """ Computes the maximum length of the longest ORF over num_trials shuffles
         of the specfied DNA sequence
@@ -331,8 +325,6 @@ def longest_ORF_noncoding(dna, num_trials):
 
     return max_length 
 
-
-
 def coding_strand_to_AA(dna):
     """ Computes the Protein encoded by a sequence of DNA.  This function
         does not check for start and stop codons (it assumes that the input
@@ -357,7 +349,6 @@ def coding_strand_to_AA(dna):
         -The sixth doctest makes sure that if there is a stop codon in the 
         dna sequence, it will still run, and return a '|' in the place of 
         an amino acid, as it is defined in the aa_table dictionary
-
 
         >>> coding_strand_to_AA("ATGCGA")
         'MR'
