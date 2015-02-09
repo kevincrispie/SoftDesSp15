@@ -7,9 +7,9 @@ Type III secretion system protein SpoA  (100% Query cover)
 Type III secretion protein SpaS         (100% Query cover)
 ATP synthase SpaL                       (100% Query cover)
 Invasion protein InvJ                   (100% Query cover)
-Type III secretion protein SpaN			(100% Query cover)
-Type III secretion protein SpaP			(100% Query cover)
-Type III secretion protein SpaR			(100% Query cover)
+Type III secretion protein SpaN         (100% Query cover)
+Type III secretion protein SpaP         (100% Query cover)
+Type III secretion protein SpaR         (100% Query cover)
 
 Analysis:
 
