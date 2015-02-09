@@ -5,11 +5,11 @@ Created on Wed Jan  28 3:32:00 2015
 @author: Kevin Crispie
 
 """
-#importing functions for later use in program
+
 from amino_acids import aa, codons, aa_table
 import random
 from load import load_seq
-dna = load_seq("./data/X73525.fa")
+
 
 def shuffle_string(s):
     """ Shuffles the characters in the input string
@@ -60,6 +60,7 @@ def get_complement(nucleotide):
     'C'
 
     """
+    
     if nucleotide == 'A':  
         complement = 'T'
     elif nucleotide == 'C': 
@@ -137,7 +138,6 @@ def rest_of_ORF(dna):
     ''
 
     """
- 
 
     for x in range(0,len(dna),3): 
         if dna[x:x+3] in ['TAG', 'TAA', 'TGA']:
@@ -145,7 +145,6 @@ def rest_of_ORF(dna):
             return rest_ORF
         
     return dna
-
 
 def find_all_ORFs_oneframe(dna):
     """ Finds all non-nested open reading frames in the given DNA sequence and returns
@@ -226,6 +225,7 @@ def find_all_ORFs(dna):
     frames3 = find_all_ORFs_oneframe(dna[2:])
 
     all_frames = frames1 + frames2 + frames3 
+    
     return all_frames  
 
 def find_all_ORFs_both_strands(dna):
@@ -256,11 +256,10 @@ def find_all_ORFs_both_strands(dna):
     
     dna_comp = get_reverse_complement(dna) 
 
-    frames_strand1 = find_all_ORFs(dna) 
-    frames_strand2 = find_all_ORFs(dna_comp) 
+    frames_dna = find_all_ORFs(dna) 
+    frames_dna_comp = find_all_ORFs(dna_comp) 
 
-
-    both_strand_frames = frames_strand1 + frames_strand2 
+    both_strand_frames = frames_dna + frames_dna_comp 
     
     return both_strand_frames  
     
@@ -357,7 +356,7 @@ def coding_strand_to_AA(dna):
         when there are no complete codons in the dna strand
         -The sixth doctest makes sure that if there is a stop codon in the 
         dna sequence, it will still run, and return a '|' in the place of 
-        an amino acid, as is defined in the aa_table dictionary
+        an amino acid, as it is defined in the aa_table dictionary
 
 
         >>> coding_strand_to_AA("ATGCGA")
@@ -376,9 +375,7 @@ def coding_strand_to_AA(dna):
         >>> coding_strand_to_AA("TAG")
         '|'
 
-    """
-
-    
+    """ 
     
     AA_chain = '' 
     
@@ -406,22 +403,15 @@ def gene_finder(dna):
     thresh = longest_ORF_noncoding(dna,1500) 
     
     all_ORFs = find_all_ORFs(dna)
-
-    
-    above_thresh = [] 
+     
+    amino_acids = []
     for x in range(len(all_ORFs)):
         if len(all_ORFs[x])> thresh:
-            above_thresh.append(all_ORFs[x])  
-
-    amino_acids = []
-    
-    for x in range(len(above_thresh)):
-        amino_acids.append(coding_strand_to_AA(above_thresh[x]))
-
+            amino_acids.append(coding_strand_to_AA(all_ORFs[x]))  
 
     return amino_acids   
 
-
+dna = load_seq("./data/X73525.fa")
 amino_acids = gene_finder(dna)
 print amino_acids
 
