@@ -25,7 +25,8 @@ could be combinations of other, smaller proteins, with only small changes in
 the amino acid sequence that allow them to perform more complex functions.
 Overall, the entire amino acid sequence may code for a specific type III
 secretion protein from the SpoA superfamily, but in order to build such a
-protein, other proteins, or elements of other proteins, each involved with a specific function (surface presentation of antigens, secretion, etc) must be 
+protein, other proteins, or elements of other proteins, each involved with a
+specific function (surface presentation of antigens, secretion, etc) must be 
 used. The main biological role of an SpoA protein is the cellular amino acid
 catabolic process.
 
