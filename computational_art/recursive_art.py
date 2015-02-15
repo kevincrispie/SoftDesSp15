@@ -2,6 +2,7 @@
 
 import random
 from PIL import Image
+import math
 
 
 def build_random_function(min_depth, max_depth):
@@ -20,11 +21,22 @@ def build_random_function(min_depth, max_depth):
     just_x = ["x"]
     just_y = ["y"]
     product = ["prod",["x"],["y"]]
-    avg = ["divide_by_two",[["prod",["x"],["y"]]]
+    avg = ["divide_by_two",["prod",["x"],["y"]]]
     sin_pi = ["sin_pi",["x"]]
     cos_pi = ["cos_pi",["x"]]
-    
-    
+
+    function_bank = [just_x, just_y, product, avg, sin_pi, cos_pi]
+    random_function = []
+    i = 0
+    while i < max_depth:
+        random_function = [function_bank[random.randint(0,5)],build_random_function(min_depth,max_depth-1)]
+        i +=1 
+
+
+
+        
+
+    return random_function
 
 
     pass
@@ -49,6 +61,14 @@ def evaluate_random_function(f, x, y):
     green_function = build_random_function(7,9)
     blue_function = build_random_function(7,9)
 
+    if f[0] == "divide_by_two":
+        return 0.5*(x+y)
+    if f[0] == "sin_pi":
+        return math.sin(math.pi*y)
+    if f[0] == "cos_pi":
+        return math.cos(math.pi*x)
+    if f[0] == "prod":
+        return x*y
     if f[0] == 'x':
         return x
     elif f[0] == 'y':
@@ -152,7 +172,8 @@ def generate_art(filename, x_size=350, y_size=350):
 
     im.save(filename)
 
-
+random_function = build_random_function(7, 9)
+print random_function
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
