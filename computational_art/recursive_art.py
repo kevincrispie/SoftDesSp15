@@ -16,6 +16,17 @@ def build_random_function(min_depth, max_depth):
                  these functions)
     """
     # TODO: implement this
+
+    just_x = ["x"]
+    just_y = ["y"]
+    product = ["prod",["x"],["y"]]
+    avg = ["divide_by_two",[["prod",["x"],["y"]]]
+    sin_pi = ["sin_pi",["x"]]
+    cos_pi = ["cos_pi",["x"]]
+    
+    
+
+
     pass
 
 
@@ -33,6 +44,11 @@ def evaluate_random_function(f, x, y):
         >>> evaluate_random_function(["y"],0.1,0.02)
         0.02
     """
+
+    red_function = build_random_function(7,9)
+    green_function = build_random_function(7,9)
+    blue_function = build_random_function(7,9)
+
     if f[0] == 'x':
         return x
     elif f[0] == 'y':
