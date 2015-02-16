@@ -175,8 +175,7 @@ def generate_art(filename, x_size=350, y_size=350):
 
     im.save(filename)
 
-random_function = build_random_function(7, 9)
-print random_function
+
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
