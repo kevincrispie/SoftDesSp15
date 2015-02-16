@@ -19,7 +19,7 @@ def build_random_function(min_depth, max_depth):
     # TODO: implement this
 
     
-    function_bank = ["prod", "avg", "sin_pi", "cos_pi", "abs"]
+    function_bank = ["prod", "avg", "sin_pi", "cos_pi", "abs", 'neg_abs', 'squared', 'cubed']
     depth = random.randint(min_depth, max_depth)
     
     if depth == 1:
@@ -56,7 +56,7 @@ def evaluate_random_function(f, x, y):
         return x
     elif f[0] == 'y':
         return y
-    elif f[0] == 'divide_by_two':
+    elif f[0] == 'avg':
         return 0.5 * (evaluate_random_function(f[1],x,y) + evaluate_random_function(f[2],x,y))
     elif f[0] == 'sin_pi':
         return math.sin(math.pi * evaluate_random_function(f[1],x,y))
@@ -66,10 +66,14 @@ def evaluate_random_function(f, x, y):
         return evaluate_random_function(f[1],x,y) * evaluate_random_function(f[2],x,y)
     elif f[0] == 'abs':
         return abs(evaluate_random_function(f[1],x,y))
+    elif f[0] == 'neg_abs':
+        return -1 * abs(evaluate_random_function(f[1],x,y))
+    elif f[0] =='squared':
+        return evaluate_random_function(f[1],x,y)**2
+    elif f[0] =='cubed':
+        return evaluate_random_function(f[1],x,y)**3
     
     
-
-
 def remap_interval(val, input_interval_start, input_interval_end, output_interval_start, output_interval_end):
     """ Given an input value in the interval [input_interval_start,
         input_interval_end], return an output value scaled to fall within
