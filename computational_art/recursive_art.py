@@ -18,28 +18,22 @@ def build_random_function(min_depth, max_depth):
     """
     # TODO: implement this
 
-    just_x = ["x"]
-    just_y = ["y"]
-    product = ["prod",["x"],["y"]]
-    avg = ["divide_by_two",["prod",["x"],["y"]]]
-    sin_pi = ["sin_pi",["x"]]
-    cos_pi = ["cos_pi",["x"]]
+    
+    function_bank = ["prod", "avg", "sin_pi", "cos_pi", "abs"]
+    depth = random.randint(min_depth, max_depth)
+    
+    if depth == 1:
+        return [random.choice(["x","y"])]
+    else: 
+        recursive = [random.choice(function_bank)]
+        if recursive[0] in ["prod","avg"]:
+            recursive.append(build_random_function(depth-1,depth-1))
+            recursive.append(build_random_function(depth-1,depth-1))
 
-    function_bank = [just_x, just_y, product, avg, sin_pi, cos_pi]
-    random_function = []
-    i = 0
-    while i < max_depth:
-        random_function = [function_bank[random.randint(0,5)],build_random_function(min_depth,max_depth-1)]
-        i +=1 
+        else:
+            recursive.append(build_random_function(depth-1,depth-1))
 
-
-
-        
-
-    return random_function
-
-
-    pass
+    return recursive
 
 
 def evaluate_random_function(f, x, y):
@@ -57,22 +51,22 @@ def evaluate_random_function(f, x, y):
         0.02
     """
 
-    red_function = build_random_function(7,9)
-    green_function = build_random_function(7,9)
-    blue_function = build_random_function(7,9)
 
-    if f[0] == "divide_by_two":
-        return 0.5*(x+y)
-    if f[0] == "sin_pi":
-        return math.sin(math.pi*y)
-    if f[0] == "cos_pi":
-        return math.cos(math.pi*x)
-    if f[0] == "prod":
-        return x*y
     if f[0] == 'x':
         return x
     elif f[0] == 'y':
         return y
+    elif f[0] == 'divide_by_two':
+        return 0.5 * (evaluate_random_function(f[1],x,y) + evaluate_random_function(f[2],x,y))
+    elif f[0] == 'sin_pi':
+        return math.sin(math.pi * evaluate_random_function(f[1],x,y))
+    elif f[0] == 'cos_pi':
+        return math.cos(math.pi * evaluate_random_function(f[1],x,y))
+    elif f[0] == 'prod':
+        return evaluate_random_function(f[1],x,y) * evaluate_random_function(f[2],x,y)
+    elif f[0] == 'abs':
+        return abs(evaluate_random_function(f[1],x,y))
+    
     
 
 
@@ -153,9 +147,14 @@ def generate_art(filename, x_size=350, y_size=350):
         x_size, y_size: optional args to set image dimensions (default: 350)
     """
     # Functions for red, green, and blue channels - where the magic happens!
-    red_function = ["x"]
-    green_function = ["y"]
-    blue_function = ["x"]
+    #red_function = ["x"]
+    #green_function = ["y"]
+    #blue_function = ["x"]
+
+
+    red_function = build_random_function(7,9)
+    green_function = build_random_function(7,9)
+    blue_function = build_random_function(7,9)
 
     # Create image and loop over all pixels
     im = Image.new("RGB", (x_size, y_size))
