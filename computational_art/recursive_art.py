@@ -3,7 +3,8 @@
 import random
 from PIL import Image
 import math
-
+min_depth = 7
+max_depth = 9
 
 def build_random_function(min_depth, max_depth):
     """ Builds a random function of depth at least min_depth and depth
@@ -12,14 +13,11 @@ def build_random_function(min_depth, max_depth):
 
         min_depth: the minimum depth of the random function
         max_depth: the maximum depth of the random function
-        returns: the randomly generated function represented as a nested list
-                 (see assignment writeup for details on the representation of
-                 these functions)
+        returns: the randomly generated function represented as a nested list 
+                called recursive
     """
-    # TODO: implement this
-
     
-    function_bank = ["prod", "avg", "sin_pi", "cos_pi", "abs", 'neg_abs', 'squared', 'cubed']
+    function_bank = ["prod", "avg", "sin_pi", "cos_pi", "abs", 'neg_abs', 'squared', 'cubed','tan','square_root', 'cube_root']
     depth = random.randint(min_depth, max_depth)
     
     if depth == 1:
@@ -34,7 +32,6 @@ def build_random_function(min_depth, max_depth):
             recursive.append(build_random_function(depth-1,depth-1))
 
     return recursive
-
 
 def evaluate_random_function(f, x, y):
     """ Evaluate the random function f with inputs x,y
@@ -72,6 +69,12 @@ def evaluate_random_function(f, x, y):
         return evaluate_random_function(f[1],x,y)**2
     elif f[0] =='cubed':
         return evaluate_random_function(f[1],x,y)**3
+    elif f[0] == 'tan':
+        return math.tan(evaluate_random_function(f[1],x,y))
+    elif f[0] == 'square_root':
+        return abs(evaluate_random_function(f[1],x,y)) ** (1/2.0)
+    elif f[0] == 'cube_root':
+        return abs(evaluate_random_function(f[1],x,y)) ** (1/3.0)
     
     
 def remap_interval(val, input_interval_start, input_interval_end, output_interval_start, output_interval_end):
@@ -151,14 +154,14 @@ def generate_art(filename, x_size=350, y_size=350):
         x_size, y_size: optional args to set image dimensions (default: 350)
     """
     # Functions for red, green, and blue channels - where the magic happens!
-    #red_function = ["x"]
-    #green_function = ["y"]
-    #blue_function = ["x"]
 
+    #red_function = build_random_function(7,9)
+    #green_function = build_random_function(7,9)
+    #blue_function = build_random_function(7,9)
 
-    red_function = build_random_function(7,9)
-    green_function = build_random_function(7,9)
-    blue_function = build_random_function(7,9)
+    red_function = build_random_function(min_depth, max_depth)
+    green_function = build_random_function(min_depth, max_depth)
+    blue_function = build_random_function(min_depth, max_depth)
 
     # Create image and loop over all pixels
     im = Image.new("RGB", (x_size, y_size))
