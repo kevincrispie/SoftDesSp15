@@ -3,8 +3,10 @@
 import random
 from PIL import Image
 import math
-min_depth = 7
-max_depth = 9
+
+min_depth = 30
+max_depth = 33
+
 
 def build_random_function(min_depth, max_depth):
     """ Builds a random function of depth at least min_depth and depth
@@ -44,7 +46,7 @@ def evaluate_random_function(f, x, y):
 
         >>> evaluate_random_function(["x"],-0.5, 0.75)
         -0.5
-        >>> evaluate_random_function(["y"],0.1,0.02)
+        >>> evaluate_random_function(["y"], 0.1, 0.02)
         0.02
     """
 
@@ -76,7 +78,7 @@ def evaluate_random_function(f, x, y):
     elif f[0] == 'cube_root':
         return abs(evaluate_random_function(f[1],x,y)) ** (1/3.0)
     
-    
+
 def remap_interval(val, input_interval_start, input_interval_end, output_interval_start, output_interval_end):
     """ Given an input value in the interval [input_interval_start,
         input_interval_end], return an output value scaled to fall within
@@ -155,10 +157,6 @@ def generate_art(filename, x_size=350, y_size=350):
     """
     # Functions for red, green, and blue channels - where the magic happens!
 
-    #red_function = build_random_function(7,9)
-    #green_function = build_random_function(7,9)
-    #blue_function = build_random_function(7,9)
-
     red_function = build_random_function(min_depth, max_depth)
     green_function = build_random_function(min_depth, max_depth)
     blue_function = build_random_function(min_depth, max_depth)
@@ -182,12 +180,6 @@ def generate_art(filename, x_size=350, y_size=350):
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
-
-    # Create some computational art!
-    # TODO: Un-comment the generate_art function call after you
-    #       implement remap_interval and evaluate_random_function
     generate_art("myart.png")
 
-    # Test that PIL is installed correctly
-    # TODO: Comment or remove this function call after testing PIL install
-    #test_image("noise.png")
+
