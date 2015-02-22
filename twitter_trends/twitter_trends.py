@@ -7,8 +7,9 @@ import json
 import matplotlib.pyplot as plt 
 import numpy as np
 
-
-
+"""
+get authorization from twitter (this has not been committed to GitHub)
+"""
 
 auth = twitter.oauth.OAuth(OAUTH_TOKEN, OAUTH_TOKEN_SECRET,
                            CONSUMER_KEY, CONSUMER_SECRET)

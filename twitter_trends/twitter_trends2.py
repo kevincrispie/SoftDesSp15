@@ -4,7 +4,9 @@ from tweepy.streaming import StreamListener
 from pattern.en import *
 from pattern import *
 
-
+"""
+get authorization from twitter (this has not been committed to GitHub)
+"""
 
 def get_sentiment(text):
 	'''
