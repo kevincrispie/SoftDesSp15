@@ -60,7 +60,7 @@ def get_complement(nucleotide):
     'C'
 
     """
-
+# nice. and now that you know dictionaries, you could have a dictionary in the future with {'A':'T','T':'A', etc...} to make this more compact!
     if nucleotide == 'A':  
         complement = 'T'
     elif nucleotide == 'C': 
@@ -101,11 +101,12 @@ def get_reverse_complement(dna):
     """
     
     complement = ''
+# can also use for char in dna, and then run get_complement on char.
     for x in range (len(dna)):
         complement += get_complement(dna[x]) 
 
     reverse=reverse_string(complement) 
-    
+   # spaces around dat equal sign! 
     return reverse  
 
 def rest_of_ORF(dna):
@@ -184,7 +185,7 @@ def find_all_ORFs_oneframe(dna):
     ['ATGATG']
 
     """
-    
+# loving the thoroughness of these doctests.
     frames=[]  
     i = 0  
     while i < len(dna):
@@ -317,7 +318,7 @@ def longest_ORF_noncoding(dna, num_trials):
         There are no doctests for this function because shuffle_string acts
         differently each time it runs.
         """
-    
+    # you can avoid having to preinitialize lists by having an empty list that you then append to in the loop. I'd avoid preinitializing unless you are forced to.
     shuffled_dna = ['s']*num_trials   
     longest_ones = ['0']* num_trials  
 
@@ -393,7 +394,7 @@ def coding_strand_to_AA(dna):
         coding_strand = dna[:len(dna)-(len(dna)%3)] #if it doesn't, it removes extra nucleotides
     else:
         coding_strand = dna # if there are no extra nucleotides, the coding strand is dna
-
+    # try to use i as a loop variable and not x
     for x in range(0,len(coding_strand),3):
         AA_chain +=  aa_table[dna[x:x+3]]
   
@@ -410,7 +411,7 @@ def gene_finder(dna):
         shuffle_string function
     """
     
-    thresh = longest_ORF_noncoding(dna,1500) 
+    thresh = longest_ORF_noncoding(dna,500) 
     
     all_ORFs = find_all_ORFs(dna)
      
@@ -421,6 +422,7 @@ def gene_finder(dna):
 
     return amino_acids   
 
+# if you want to run code, generally put in under if __name__ == '__main__', because otherwise it will run automatically when you import your module into other files and then you'll have a bad time.
 dna = load_seq("./data/X73525.fa")
 amino_acids = gene_finder(dna)
 print amino_acids
