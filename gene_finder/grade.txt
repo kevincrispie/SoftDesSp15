@@ -1,0 +1,3 @@
+Functionality: 5/5
+Documentation: 5/5, fantastic job with those docstring tests!
+Style: 5/5, much improved on what you showed me at the checkoff. Nice job!
