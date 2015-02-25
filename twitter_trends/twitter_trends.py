@@ -1,9 +1,5 @@
-
-
 from pattern.web import *
 from pattern.en import *
-import twitter
-import json
 import matplotlib.pyplot as plt 
 import numpy as np
 
@@ -11,33 +7,39 @@ import numpy as np
 get authorization from twitter (this has not been committed to GitHub)
 """
 
-auth = twitter.oauth.OAuth(OAUTH_TOKEN, OAUTH_TOKEN_SECRET,
-                           CONSUMER_KEY, CONSUMER_SECRET)
+def twitter_fetch(input_file):
+	 with open (input_file, "r") as myfile:
+	 	twitter_data = myfile.readlines()
+	 for x in range(len(twitter_data)):
+	 	twitter_data[x] = twitter_data[x].rstrip('\n')
 
-def twitter_fetch():
-	twitter_api = twitter.Twitter(auth=auth)
+	 return twitter_data
 
-	q = 'rick perry'
-	count = 100
+def list_stripper(data_list):
+	i = 0
+	while i < len(data_list):
+		if data_list[i] == 'obama':
+			del(data_list[i])
+		else:
+			i += 1
+	return data_list
 
-	search_results = twitter_api.search.tweets(q=q, count=count)
+def list_splitter(data_list, keyword):
+	for x in range(len(data_list)):
+		if data_list[x] == keyword:
+			new_list = data_list[x::]
+			data_list = data_list[0:x]
+			return data_list, new_list
 
-	statuses = search_results['statuses']
+def iterated_list_splitter(data_list, keywords):
+	list_of_all_tweets = []
+	list_to_split = data_list
+	for keyword in keywords:
+		produced_list, list_to_split = list_splitter(list_to_split,keyword)
+		list_of_all_tweets.append(produced_list)
 
-	for _ in range(5):
-		print "Length of Statuses", len(statuses)
-		try:
-			next_results = search_results['search_metadata']['next_results']
-		except KeyError, e:
-			break
-
-		kwargs = dict([kv.split('=') for kv in next_results[1:].split("&")])
-
-		search_results = twitter_api.search.tweets(**kwargs)
-		statuses += search_results['statuses']
-
-	print json.dumps(statuses[0],indent=1)
-
+	list_of_all_tweets.append(list_to_split)
+	return list_of_all_tweets
 
 def get_sentiment(text):
 	'''
@@ -67,8 +69,8 @@ def get_average(sentiments):
 bob_tweets = ["bob is great","bob is nice", "bob is my friend", "bob is mean", "bob is evil","bob is the best ever","bob", "fred", "joe is cool"]
 bob_sentiments = get_sentiments(bob_tweets)
 bob_objectivity = get_objectivity(bob_tweets)
-print bob_objectivity
-print bob_sentiments
+#print bob_objectivity
+#print bob_sentiments
 bob_opinion = get_average(bob_sentiments)
 
 george_tweets = ["bob is great","bob is nice", "bob is my friend", "bob is mean"]
@@ -116,10 +118,25 @@ people = ('bob','george','tim','jim','richard','leo')
 
 #plt.show()
 
-plt.scatter(bob_sentiments,bob_objectivity)
-plt.grid(True)
-plt.xlabel('Sentiment')
-plt.ylabel('Objectivity')
-plt.show()
+#plt.scatter(bob_sentiments,bob_objectivity)
+#plt.grid(True)
+#plt.xlabel('Sentiment')
+#plt.ylabel('Objectivity')
+#plt.show()
 
+#input_file = 'tweet_file.txt'
+#data_list = twitter_fetch(input_file)
+#print list_stripper(data_list)
+data_list = ['obama', 'b','b','b','bush', 'c','c','kerry','d']
+keywords = ['bush','kerry']
+#obama_list, new_list = list_splitter(data_list, keyword)
+#bush_list, kerry_list = list_splitter(new_list, 'kerry')
+#print obama_list
+#print bush_list
+#print kerry_list
+
+
+print iterated_list_splitter(data_list,keywords)
+
+	
 
