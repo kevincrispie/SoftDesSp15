@@ -1,3 +1,8 @@
+"""
+This is a file where I researched and experimented using an API to pull tweets from twitter
+The full Twitter analysis code is in twitter_trends.py
+"""
+
 from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener

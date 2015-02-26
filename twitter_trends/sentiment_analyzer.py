@@ -1,3 +1,8 @@
+"""
+This file is where I experimented and wrote my own sentiment sentiment_analyzer
+The full implementation is in twitter_trends.py
+"""
+
 import urllib
 import math
 
@@ -40,10 +45,9 @@ def sentiment_analyzer(text):
 	if '#' in text:
 		sent_index *= hashtag_scaling * lower_text.count('#') + 1
 	sent_index *= uppercase_scaling * sum(1 for c in text if c.isupper())
-
-
 		
 	return sent_index
+
 
 def classify_sentiment(sent_index):
 	""" classifies the sentiemnt of a statement into positive, neutral, or negative
@@ -58,6 +62,7 @@ def classify_sentiment(sent_index):
 		return 'neutral'
 	if sent_index >= 0.5:
 		return 'positive'
+
 
 def passion_analyzer(text):
 	""" Analyzes how much passion is in a statement
