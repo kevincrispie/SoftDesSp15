@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """ This makes art"""
 
 import random
@@ -7,12 +6,7 @@ import math
 
 min_depth = 30
 max_depth = 33
-=======
-""" TODO: Put your header comment here """
-
-import random
-from PIL import Image
->>>>>>> 8f4f3c62123a632a068bb413039c29a92f7b5ef8
+#you had unfixed merge conflicts. Let's talk about those some time!
 
 
 def build_random_function(min_depth, max_depth):
@@ -22,7 +16,6 @@ def build_random_function(min_depth, max_depth):
 
         min_depth: the minimum depth of the random function
         max_depth: the maximum depth of the random function
-<<<<<<< HEAD
         returns: the randomly generated function represented as a nested list 
                 called recursive
     """
@@ -40,17 +33,9 @@ def build_random_function(min_depth, max_depth):
 
         else:
             recursive.append(build_random_function(depth-1,depth-1))
+        #nice solution! pretty elegant :)
 
     return recursive
-=======
-        returns: the randomly generated function represented as a nested list
-                 (see assignment writeup for details on the representation of
-                 these functions)
-    """
-    # TODO: implement this
-    pass
-
->>>>>>> 8f4f3c62123a632a068bb413039c29a92f7b5ef8
 
 def evaluate_random_function(f, x, y):
     """ Evaluate the random function f with inputs x,y
@@ -63,12 +48,9 @@ def evaluate_random_function(f, x, y):
 
         >>> evaluate_random_function(["x"],-0.5, 0.75)
         -0.5
-<<<<<<< HEAD
         >>> evaluate_random_function(["y"], 0.1, 0.02)
         0.02
     """
-
-
     if f[0] == 'x':
         return x
     elif f[0] == 'y':
@@ -95,17 +77,7 @@ def evaluate_random_function(f, x, y):
         return abs(evaluate_random_function(f[1],x,y)) ** (1/2.0)
     elif f[0] == 'cube_root':
         return abs(evaluate_random_function(f[1],x,y)) ** (1/3.0)
-    
 
-=======
-        >>> evaluate_random_function(["y"],0.1,0.02)
-        0.02
-    """
-    # TODO: implement this
-    pass
-
-
->>>>>>> 8f4f3c62123a632a068bb413039c29a92f7b5ef8
 def remap_interval(val, input_interval_start, input_interval_end, output_interval_start, output_interval_end):
     """ Given an input value in the interval [input_interval_start,
         input_interval_end], return an output value scaled to fall within
@@ -129,15 +101,10 @@ def remap_interval(val, input_interval_start, input_interval_end, output_interva
         >>> remap_interval(5, 4, 6, 1, 2)
         1.5
     """
-<<<<<<< HEAD
     remap_value = output_interval_start + float(val - input_interval_start) * \
     float(output_interval_end - output_interval_start)/ \
     float(input_interval_end - input_interval_start)
     return float(remap_value)
-=======
-    # TODO: implement this
-    pass
->>>>>>> 8f4f3c62123a632a068bb413039c29a92f7b5ef8
 
 
 def color_map(val):
@@ -156,7 +123,6 @@ def color_map(val):
         >>> color_map(0.5)
         191
     """
-    # NOTE: This relies on remap_interval, which you must provide
     color_code = remap_interval(val, -1, 1, 0, 255)
     return int(color_code)
 
@@ -167,7 +133,6 @@ def test_image(filename, x_size=350, y_size=350):
         filename: string filename for image (should be .png)
         x_size, y_size: optional args to set image dimensions (default: 350)
     """
-    # Create image and loop over all pixels
     im = Image.new("RGB", (x_size, y_size))
     pixels = im.load()
     for i in range(x_size):
@@ -188,16 +153,9 @@ def generate_art(filename, x_size=350, y_size=350):
         x_size, y_size: optional args to set image dimensions (default: 350)
     """
     # Functions for red, green, and blue channels - where the magic happens!
-<<<<<<< HEAD
-
     red_function = build_random_function(min_depth, max_depth)
     green_function = build_random_function(min_depth, max_depth)
     blue_function = build_random_function(min_depth, max_depth)
-=======
-    red_function = ["x"]
-    green_function = ["y"]
-    blue_function = ["x"]
->>>>>>> 8f4f3c62123a632a068bb413039c29a92f7b5ef8
 
     # Create image and loop over all pixels
     im = Image.new("RGB", (x_size, y_size))
@@ -218,18 +176,4 @@ def generate_art(filename, x_size=350, y_size=350):
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
-<<<<<<< HEAD
     generate_art("myart.png")
-
-
-=======
-
-    # Create some computational art!
-    # TODO: Un-comment the generate_art function call after you
-    #       implement remap_interval and evaluate_random_function
-    #generate_art("myart.png")
-
-    # Test that PIL is installed correctly
-    # TODO: Comment or remove this function call after testing PIL install
-    test_image("noise.png")
->>>>>>> 8f4f3c62123a632a068bb413039c29a92f7b5ef8
