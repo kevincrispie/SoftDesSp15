@@ -67,9 +67,8 @@ def get_nearest_station(latitude, longitude):
 
     url_with_lng = base_url.replace('latitude',str(latitude))
     url_with_lat_lng = url_with_lng.replace('longitude', str(longitude))
-    print url_with_lat_lng
     results = get_json(url_with_lat_lng)
-
+    
     stop_name = results['stop'][0]['stop_name']   
     stop_distance = results['stop'][0]['distance']
 
@@ -93,3 +92,5 @@ def find_stop_near(place_name):
     pass
 
 find_stop_near("Fenway Park")
+find_stop_near("Boston University")
+find_stop_near("Boston City Hall")
