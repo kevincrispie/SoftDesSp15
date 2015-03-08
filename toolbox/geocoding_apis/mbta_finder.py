@@ -9,6 +9,7 @@ Finds the MBTA stops closest to a given location.
 import urllib   # urlencode function
 import urllib2  # urlopen function (better than urllib version)
 import json
+from pprint import pprint
 
 
 GMAPS_BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json"
@@ -17,10 +18,9 @@ MBTA_DEMO_API_KEY = "wX9NwuHnZU2ToO7GmGR9uw"
 
 
 def encode_maps_url(place_name):
-    base_url = "https://maps.googleapis.com/maps/api/geocode/"
-    place_name = place_name.replace(' ','%20')
-    url = base_url + place_name
-
+    base_url = "https://maps.googleapis.com/maps/api/geocode/json?address="
+    url = urllib.quote(base_url + place_name, safe="%/:=&?~#+!$,;'@()*[]")
+    
     return url
 
 
@@ -47,7 +47,6 @@ def get_lat_long(place_name):
     """
 
     url = encode_maps_url(place_name)
-    print url
     result = get_json(url)
     lat = result['results'][0]['geometry']['location']['lat']
     lng = result['results'][0]['geometry']['location']['lng']
@@ -66,12 +65,16 @@ def get_nearest_station(latitude, longitude):
     base_url = "http://realtime.mbta.com/developer/api/v2/stopsbylocation?" + \
     "api_key=wX9NwuHnZU2ToO7GmGR9uw&lat=latitude&lon=longitude&format=json"
 
-    url_with_lng = base_url.replace('latitude',latitude)
-    url_with_lat_lng = url_with_lng.replace('longitude', longitude)
-
+    url_with_lng = base_url.replace('latitude',str(latitude))
+    url_with_lat_lng = url_with_lng.replace('longitude', str(longitude))
+    print url_with_lat_lng
     results = get_json(url_with_lat_lng)
-    
-    return results
+
+    stop_name = results['stop'][0]['stop_name']   
+    stop_distance = results['stop'][0]['distance']
+
+
+    return stop_name, stop_distance
     
 
 
@@ -81,8 +84,12 @@ def find_stop_near(place_name):
     distance from the given place to that stop.
     """
 
+    latitude,longitude= get_lat_long(place_name)
+    stop_name, stop_distance = get_nearest_station(latitude,longitude)
+    stop_distance = str(round(float(stop_distance),3))
 
+    print stop_name + " is " + stop_distance + " miles away from " + place_name
 
     pass
 
-print get_lat_long("Fenway Park")
+find_stop_near("Fenway Park")
