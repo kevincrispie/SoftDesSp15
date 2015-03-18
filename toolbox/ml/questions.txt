@@ -1,0 +1,9 @@
+questions
+
+1.) As the Percentage of data used for training increases, so does the accuracy, with a plateau at the highest value of accuracy.
+
+2.) Around the middle part of the curve was the most noisy, though when I ran fewer numbers of trials there was more noise. It's possible this was because there was less data to work with and "learn" as part of the machine learning.
+
+3.) I found that around 100 trials is sufficent to get a smooth curve
+
+4.) Increasing the C value seems to incrrease accuracy as well. It also seems to increase the runtime on my computer.
