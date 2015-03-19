@@ -1,6 +1,8 @@
+#!/usr/bin/env python
 import pygame
 from math import sqrt
 #http://www.raywenderlich.com/4946/introduction-to-a-pathfinding
+
 
 class GridWorld():
     """Grid world that contains animals living in cells."""
