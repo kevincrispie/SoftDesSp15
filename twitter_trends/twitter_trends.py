@@ -12,6 +12,7 @@ emotional analysis of different political search terms.
 """
 
 
+#dang, nice job with all those readable function names. those short, concise functions are a beautiful beautiful sight.
 def twitter_fetch(input_file):
 	"""
 	returns input file as list of tweets
@@ -218,6 +219,7 @@ christie_passion = passion_lists[6]
 
 #plotting graphs
 
+#you ended up repeating yourself a lot here! It might have been better to write a function to do this, where you pass in passion_lists and a list of names to map to. Then you could automate this/avoid repeating yourself. If you find yourself copy and pasting, think about how you could write a function and a for loop instead!
 plt.scatter(obama_sentiment,obama_passion)
 plt.grid(True)
 plt.title('Barack Obama Twitter Sentiments')

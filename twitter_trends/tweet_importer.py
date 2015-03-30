@@ -29,6 +29,7 @@ def get_tweets(search_term):
 	tweet_file.write(search_term + '\n')
 	tweet_file.close()
 	for j in range(3):
+#somewhawt confused as to what the outer loop is meant to do. Do you just write the same results to the same file 3 times?
 		for tweet in t.search(search_term, start = 1, count = 3):
 			tweet_file = open("tweet_file2.txt", "a")
 			tweet_file.write(tweet.text + '\n')
@@ -42,6 +43,7 @@ one keyword at a time.
 """
 
 #search_terms = ['barack obama','jeb bush','hillary clinton','john boehner','joe biden','scott walker','chris christie']
+#why not use for term in search_terms: get_tweets(term) sleep(...?
 #get_tweets('barack obama')
 #time.sleep(3*60)
 

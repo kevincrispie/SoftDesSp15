@@ -26,8 +26,7 @@ def sentiment_analyzer(text):
 	input: text, a string to be analyzed
 	returns: sent_index, a numerical rating of the sentiment of a statement
 	"""
-
-	lower_text = text.lower()
+lower_text = text.lower()
 		
 	hashtag_scaling = 0.3
 	exclamation_scaling = 0.5
@@ -96,6 +95,7 @@ def passion_analyzer(text):
 
 	
 
+#best to put code that you mean to test inside a separate function, or at least under a if __name__ == '__main__': statement so that it doesn't run when imported.
 print sentiment_analyzer('I am happy yes yes yes!!!! #awesome')
 print
 print sentiment_analyzer('I am a bad kid. I am bad bad bad')
